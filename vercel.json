@@ -28,7 +28,7 @@
     },
     {
      "key": "Access-Control-Allow-Origin",
-     "value": "https://phishguard.vercel.app"
+     "value": "https://phishguard-navy-alpha.vercel.app"
     },
     {
      "key": "Content-Security-Policy",
