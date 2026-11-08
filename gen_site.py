@@ -4,7 +4,7 @@ feats, mu, sd, coef, icpt = m["features"], m["mean"], m["scale"], m["coef"], m["
 susp = m["susp_words"]
 mt = m["metrics"]
 acc, auc, base = mt["cv_accuracy"], mt["auc"], mt["baseline_accuracy"]
-DOMAIN = "phishguard.vercel.app"
+DOMAIN = "phishguard-navy-alpha.vercel.app"
 JS_MODEL = f"""const FEATURES = {json.dumps(feats)};
 const MEAN = {json.dumps(mu)};
 const SCALE = {json.dumps(sd)};
@@ -17,13 +17,13 @@ function extractFeatures(url) {{
   const rest = u.includes("://") ? u.split("://")[1] : u;
   const host = rest.split(/[/?#]/)[0];
   const path = rest.slice(host.length);
-  const hasIp = /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host) ? 1 : 0;
+  const hasIp = /^\d+\.\d+\.\d+\.\d+$/.test(host) ? 1 : 0;
   const parts = host.split(".");
   const numSub = hasIp ? 0 : Math.max(0, parts.length - 2);
   let susp = 0;
   SUSP_WORDS.forEach(w => {{ susp += u.split(w).length - 1; }});
   const digits = (u.match(/[0-9]/g) || []).length;
-  return [u.length, (u.match(/\\./g) || []).length, (u.match(/-/g) || []).length,
+  return [u.length, (u.match(/\./g) || []).length, (u.match(/-/g) || []).length,
     digits, u.includes("@") ? 1 : 0, hasIp, numSub, susp, isHttps, path.length];
 }}
 function phishProb(url) {{
